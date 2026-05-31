@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>모두의 SYNERGY FRAME</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap');
+
+:root{
+  --bg1:#06121f;
+  --bg2:#09243a;
+  --cyan:#5ee7ff;
+  --blue:#6ea8ff;
+  --coral:#ff8a7a;
+  --lime:#b8ff7a;
+  --cream:#fff8df;
+  --ink:#07111f;
+  --glass:rgba(255,255,255,.105);
+  --line:rgba(255,255,255,.2);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Noto Sans KR',system-ui,sans-serif;
+  color:white;
+  background:
+    radial-gradient(circle at 15% 10%,rgba(94,231,255,.28),transparent 30%),
+    radial-gradient(circle at 85% 5%,rgba(255,138,122,.24),transparent 32%),
+    radial-gradient(circle at 40% 90%,rgba(184,255,122,.16),transparent 35%),
+    linear-gradient(145deg,#06121f 0%,#09243a 45%,#031018 100%);
+  overflow-x:hidden;
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+  background-size:42px 42px;
+  mask-image:linear-gradient(to bottom,rgba(0,0,0,.8),transparent 85%);
+}
+
+.hero{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:42px 5vw;
+  position:relative;
+}
+
+.hero::after{
+  content:"";
+  position:absolute;
+  width:80vw;
+  height:28vh;
+  bottom:5vh;
+  background:radial-gradient(ellipse,rgba(94,231,255,.28),transparent 66%);
+  filter:blur(38px);
+  animation:breath 4s ease-in-out infinite alternate;
+}
+
+@keyframes breath{from{opacity:.55;transform:scale(.95)}to{opacity:1;transform:scale(1.04)}}
+@keyframes glowText{from{text-shadow:0 0 8px rgba(94,231,255,.55)}to{text-shadow:0 0 26px rgba(255,138,122,.95),0 0 44px rgba(94,231,255,.5)}}
+@keyframes float{from{transform:translateY(0)}to{transform:translateY(-12px)}}
+@keyframes blink{50%{border-color:transparent}}
+
+.screen{
+  width:min(1180px,100%);
+  position:relative;
+  z-index:2;
+  border-radius:34px;
+  padding:68px 56px;
+  background:linear-gradient(135deg,rgba(255,255,255,.16),rgba(255,255,255,.055));
+  border:1px solid rgba(255,255,255,.24);
+  box-shadow:0 35px 100px rgba(0,0,0,.45), inset 0 0 70px rgba(94,231,255,.07);
+  backdrop-filter:blur(22px);
+  overflow:hidden;
+}
+
+.screen::before{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  background:linear-gradient(120deg,transparent,rgba(94,231,255,.26),transparent,rgba(255,138,122,.22),transparent);
+  transform:translateX(-80%);
+  animation:shine 6s infinite;
+}
+@keyframes shine{50%,100%{transform:translateX(80%)}}
+.screen > *{position:relative;z-index:1;}
+
+.kicker{
+  display:inline-flex;
+  gap:8px;
+  align-items:center;
+  padding:10px 16px;
+  border-radius:999px;
+  background:rgba(94,231,255,.14);
+  color:#dffaff;
+  border:1px solid rgba(94,231,255,.32);
+  font-weight:800;
+  margin-bottom:22px;
+}
+
+h1{
+  font-size:clamp(2.65rem,7vw,6rem);
+  line-height:1;
+  letter-spacing:-.06em;
+  font-weight:900;
+  background:linear-gradient(90deg,#ffffff,#5ee7ff,#fff8df,#ff8a7a);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  margin-bottom:24px;
+}
+
+.mainline{
+  font-size:clamp(1.35rem,3.2vw,2.35rem);
+  line-height:1.35;
+  font-weight:900;
+  color:#fff8df;
+  animation:glowText 1.7s ease-in-out infinite alternate;
+  margin-bottom:20px;
+}
+
+.subtitle{
+  min-height:70px;
+  font-size:clamp(1rem,2vw,1.35rem);
+  color:#e8f7ff;
+  line-height:1.8;
+  margin-bottom:24px;
+}
+.typing{border-right:3px solid #fff;white-space:normal;animation:blink .8s infinite;}
+
+.platform{
+  display:inline-block;
+  margin:8px 0 28px;
+  padding:12px 18px;
+  border-radius:18px;
+  background:linear-gradient(90deg,rgba(255,138,122,.2),rgba(94,231,255,.18));
+  border:1px solid rgba(255,255,255,.22);
+  font-weight:900;
+  letter-spacing:.02em;
+}
+
+.participants{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:24px;
+}
+.tag{
+  padding:10px 14px;
+  border-radius:999px;
+  background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.18);
+  color:#f7fbff;
+  font-size:.92rem;
+  font-weight:700;
+  transition:.25s;
+}
+.tag:hover{transform:translateY(-3px);background:rgba(94,231,255,.22)}
+
+.navhint{
+  margin-top:26px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  color:#d9f7ff;
+  font-size:.95rem;
+}
+.navhint a{
+  color:white;
+  text-decoration:none;
+  padding:10px 14px;
+  border-radius:14px;
+  background:rgba(255,255,255,.09);
+  border:1px solid rgba(255,255,255,.16);
+}
+
+.section{padding:82px 5vw;position:relative;}
+.section-head{max-width:1120px;margin:0 auto 28px;}
+.section-title{
+  font-size:clamp(2rem,4.6vw,4rem);
+  line-height:1.1;
+  font-weight:900;
+  letter-spacing:-.05em;
+  margin-bottom:16px;
+}
+.section-desc{
+  color:#d9e8f0;
+  font-size:1.05rem;
+  line-height:1.9;
+  max-width:900px;
+}
+
+.slider-wrap{
+  max-width:1240px;
+  margin:0 auto;
+  position:relative;
+}
+.slider-controls{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:14px;
+  margin:20px 0 16px;
+}
+.control-group{display:flex;gap:10px;}
+button{
+  border:0;
+  color:white;
+  cursor:pointer;
+  font-family:inherit;
+  font-weight:900;
+}
+.btn{
+  padding:13px 18px;
+  border-radius:16px;
+  background:linear-gradient(135deg,rgba(94,231,255,.28),rgba(255,138,122,.24));
+  border:1px solid rgba(255,255,255,.22);
+  box-shadow:0 12px 30px rgba(0,0,0,.23);
+}
+.btn:hover{filter:brightness(1.15);transform:translateY(-2px)}
+.counter{color:#eafaff;font-weight:900;}
+
+.insight-slider{
+  display:flex;
+  overflow-x:auto;
+  gap:28px;
+  scroll-snap-type:x mandatory;
+  scroll-behavior:smooth;
+  padding:16px 4px 28px;
+}
+.insight-slider::-webkit-scrollbar{height:12px;}
+.insight-slider::-webkit-scrollbar-thumb{background:linear-gradient(90deg,var(--cyan),var(--coral),var(--lime));border-radius:999px;}
+.insight-slider::-webkit-scrollbar-track{background:rgba(255,255,255,.08);border-radius:999px;}
+
+.slide{
+  flex:0 0 min(100%,1120px);
+  scroll-snap-align:center;
+  min-height:620px;
+  border-radius:36px;
+  padding:38px;
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.17),rgba(255,255,255,.07)),
+    radial-gradient(circle at 0% 0%,rgba(94,231,255,.2),transparent 35%),
+    radial-gradient(circle at 100% 0%,rgba(255,138,122,.16),transparent 35%);
+  border:1px solid rgba(255,255,255,.22);
+  box-shadow:0 32px 90px rgba(0,0,0,.34), inset 0 0 50px rgba(255,255,255,.035);
+  backdrop-filter:blur(18px);
+  display:grid;
+  grid-template-columns:.9fr 1.3fr;
+  gap:28px;
+  position:relative;
+  overflow:hidden;
+}
+.slide::after{
+  content:"";
+  position:absolute;
+  width:240px;height:240px;
+  right:-90px;bottom:-90px;
+  background:radial-gradient(circle,rgba(184,255,122,.22),transparent 65%);
+  animation:float 2.5s ease-in-out infinite alternate;
+}
+.slide-meta{position:relative;z-index:1;}
+.num{
+  font-size:5rem;
+  font-weight:900;
+  line-height:.9;
+  color:rgba(255,255,255,.12);
+}
+.label{
+  display:inline-block;
+  margin:18px 0;
+  padding:9px 13px;
+  border-radius:999px;
+  background:var(--accent,#5ee7ff);
+  color:#06121f;
+  font-weight:900;
+  box-shadow:0 0 26px color-mix(in srgb,var(--accent) 50%, transparent);
+}
+.slide h3{
+  font-size:clamp(1.75rem,3.4vw,3rem);
+  line-height:1.22;
+  letter-spacing:-.05em;
+  margin-bottom:16px;
+}
+.forwhom{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:20px;
+}
+.chip{
+  padding:8px 10px;
+  border-radius:999px;
+  background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.16);
+  color:#eafaff;
+  font-size:.86rem;
+  font-weight:800;
+}
+.quote-box{
+  position:relative;z-index:1;
+  background:rgba(2,6,23,.38);
+  border:1px solid rgba(255,255,255,.13);
+  border-radius:28px;
+  padding:28px;
+  overflow:auto;
+  max-height:545px;
+}
+.quote-box p{font-size:1.02rem;line-height:1.95;color:#f5fbff;margin-bottom:16px;}
+.quote{
+  display:block;
+  margin:14px 0;
+  padding:16px 18px;
+  border-left:5px solid var(--accent,#5ee7ff);
+  background:rgba(255,255,255,.08);
+  border-radius:18px;
+  font-weight:700;
+  color:#fff;
+}
+.point{
+  background:linear-gradient(transparent 55%,rgba(255,248,223,.32) 55%);
+  font-weight:900;
+}
+
+.question-bank{
+  max-width:1240px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:16px;
+}
+.qcard{
+  border-radius:22px;
+  padding:20px;
+  background:rgba(255,255,255,.095);
+  border:1px solid rgba(255,255,255,.16);
+  min-height:128px;
+  transition:.25s;
+}
+.qcard:hover{transform:translateY(-6px);background:rgba(94,231,255,.15)}
+.qcard b{display:block;color:#fff8df;margin-bottom:10px;}
+.qcard span{color:#dbeafe;line-height:1.65;font-size:.95rem;}
+
+.footer{
+  padding:70px 5vw 90px;
+  text-align:center;
+  color:#d9e8f0;
+  line-height:2;
+}
+.footer strong{font-size:1.4rem;color:#fff;}
+
+@media(max-width:900px){
+  .screen{padding:46px 24px;border-radius:28px;}
+  .slide{grid-template-columns:1fr;min-height:auto;padding:26px;}
+  .quote-box{max-height:none;}
+  .slider-controls{position:sticky;top:0;z-index:10;background:rgba(6,18,31,.78);backdrop-filter:blur(14px);padding:10px;border-radius:20px;}
+}
+@media(max-width:560px){
+  .hero{padding:24px 4vw;}
+  .section{padding:58px 4vw;}
+  .slide{flex-basis:92vw;border-radius:26px;padding:22px;}
+  .quote-box{padding:20px;border-radius:22px;}
+  .quote-box p{font-size:.97rem;line-height:1.85;}
+  .num{font-size:3.6rem;}
+  .btn{padding:11px 13px;}
+}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="screen">
+    <div class="kicker">PUBLIC EDUCATION · SYNERGY FRAME</div>
+    <h1>모두의 SYNERGY FRAME</h1>
+    <div class="mainline">질문이 연결되고<br>탐구가 학생의 미래가 되다</div>
+    <div class="subtitle"><span class="typing" id="typing"></span></div>
+    <div class="platform">시너지 리더들의 진학 플랫폼</div>
+    <div class="participants">
+      <div class="tag">청운고 한승배</div>
+      <div class="tag">덕원여고 김상근</div>
+      <div class="tag">학성여고 곽민</div>
+      <div class="tag">화원고 박한민</div>
+      <div class="tag">강원대사범대부고 박상근</div>
+      <div class="tag">완산고 조석진</div>
+      <div class="tag">인항고 허진석</div>
+      <div class="tag">학남고 은동현</div>
+    </div>
+    <div class="navhint">
+      <a href="#insights">실제 대화 인사이트 보기</a>
+      <a href="#questions">학생·학부모 질문 보기</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="insights">
+  <div class="section-head">
+    <h2 class="section-title">시너지 리더들의 실제 대화 인사이트</h2>
+    <p class="section-desc">
+      이 웹의 메인은 질문 카드가 아니라, 선생님들의 실제 대화에서 나온 진학·진로·학생부·탐구·교과 선택·면접·교육과정 인사이트입니다. 아래 슬라이드는 원문 워딩의 힘을 최대한 살리되, 학생과 학부모에게 도움이 되는 방향으로 다듬어 구성했습니다. 사교육 비교, 학교·교사 비하로 읽힐 수 있는 표현은 제외했습니다.
+    </p>
+  </div>
+
+  <div class="slider-wrap">
+    <div class="slider-controls">
+      <div class="counter"><span id="now">1</span> / <span id="total">18</span> · 좌우로 넘겨 보세요</div>
+      <div class="control-group">
+        <button class="btn" onclick="moveSlide(-1)">← 이전</button>
+        <button class="btn" onclick="moveSlide(1)">다음 →</button>
+      </div>
+    </div>
+
+    <div class="insight-slider" id="slider">
+
+      <article class="slide" style="--accent:#5ee7ff">
+        <div class="slide-meta">
+          <div class="num">01</div><span class="label">교실의 힘</span>
+          <h3>학생의 성장은 결국 교실에서 발견된다</h3>
+          <div class="forwhom"><span class="chip">학생부</span><span class="chip">진학상담</span><span class="chip">교실 활동</span></div>
+        </div>
+        <div class="quote-box">
+          <span class="quote">“생활기록부는 제가 사용하는 교실에서 하는 수업과 탐구활동에서 출발하기 때문에, 아무리 뛰어난 인공지능이 들어와도 교사와 함께한 생기부와 인공지능 생기부는 다르다고 생각합니다.”</span>
+          <span class="quote">“저만이 쓸 수 있는 생활기록부는 인공지능과는 분명히 다를 테니까요.”</span>
+          <span class="quote">“공교육 최고의 힘은 학생을 교실에서 만나고 그 기록의 모든 권한이 저희에게 있다는 점이라고 생각합니다.”</span>
+          <p>이 대화의 중심에는 <span class="point">학생을 실제로 만나는 교실의 힘</span>이 있습니다. 학생부는 문장을 꾸미는 결과물이 아니라, 수업 속 질문과 탐구, 활동 후 변화가 기록으로 남는 과정입니다.</p>
+          <p>학생과 학부모에게는 “무엇을 많이 했는가”보다 “어떤 수업에서 어떤 질문을 품고 어떻게 성장했는가”를 설명해 줄 수 있는 상담 포인트가 됩니다.</p>
+        </div>
+      </article>
+
+      <article class="slide" style="--accent:#ff8a7a">
+        <div class="slide-meta">
+          <div class="num">02</div><span class="label">진심과 정성</span>
+          <h3>진학상담은 데이터보다 먼저 학생을 향한 마음에서 출발한다</h3>
+          <div class="forwhom"><span class="chip">담임상담</span><span class="chip">학부모 상담</span><span class="chip">진로 신뢰</span></div>
+        </div>
+        <div class="quote-box">
+          <span class="quote">“이 아이는 꼭 합격하면 좋겠다라고 생각하면 대체적으로 많이 붙는 거 보면, 저의 소신까지는 아니어도 진심과 정성은 통한다고 믿고 있습니다.”</span>
+          <span class="quote">“모두가 될 수는 없어도 학생들의 진로에, 꿈에 조금이라도 보탬이 되길 바라는 수많은 공교육 선생님들의 힘이 더 크다고 생각합니다.”</span>
+          <p>진학상담은 단순히 대학 목록을 정리하는 일이 아니라, 학생이 가진 가능성을 끝까지 바라보고 연결해 주는 일입니다.</p>
+          <p>학부모 입장에서는 이 문장이 상담의 핵심을 말해 줍니다. <span class="point">좋은 상담은 정보의 양이 아니라 학생을 얼마나 깊게 이해하느냐</span>에서 시작됩니다.</p>
+        </div>
+      </article>
+
+      <article class="slide" style="--accent:#fde68a">
+        <div class="slide-meta">
+          <div class="num">03</div><span class="label">앎의 즐거움</span>
+          <h3>질문은 탐구의 시작이고, 앎의 즐거움은 학생의 진짜 역량이다</h3>
+          <div class="forwhom"><span class="chip">질문교육</span><span class="chip">탐구설계</span><span class="chip">진로학업설계</span></div>
+        </div>
+        <div class="quote-box">
+          <span class="quote">“그럼에도 희망이 있다는 믿음, 지켜야 할 그 무엇, 가치가 있다면 ‘앎의 즐거움’이 곧 교육의 희망이라는 생각으로 이 상황을 이겨내봅니다.”</span>
+          <span class="quote">“스스로 깨우치는 앎의 즐거움은 평생을 가는 지적 자산이 됩니다.”</span>
+          <span class="quote">“지식은 학생 스스로 내면에서 의미를 찾아낼 때 비로소 살아 숨 쉴 것이기 때문입니다.”</span>
+          <p>이 문장들은 학생부종합전형을 넘어 교육의 본질을 말합니다. 학생이 스스로 의미를 찾아낼 때 탐구는 입시용 활동이 아니라 진짜 배움이 됩니다.</p>
+          <p>학생에게는 “너는 무엇을 알고 싶었니?”라는 질문으로, 학부모에게는 “결과보다 배움의 동기가 중요하다”는 설명으로 연결할 수 있습니다.</p>
+        </div>
+      </article>
+
+      <article class="slide" style="--accent:#b8ff7a">
+        <div class="slide-meta">
+          <div class="num">04</div><span class="label">질문 기반 탐구</span>
+          <h3>정답을 외우는 학생에서 질문을 만드는 학생으로</h3>
+          <div class="forwhom"><span class="chip">학생 질문</span><span class="chip">수행평가</span><span class="chip">탐구 확장</span></div>
+        </div>
+        <div class="quote-box">
+          <span class="quote">“학생들이 정해진 답을 기계적으로 외우는 것을 멈추고, 당연해 보이는 것에 스스로 의문을 품고 질문하기 시작할 때 비로소 앎의 즐거움이 시작됩니다.”</span>
+          <span class="quote">“융합과 통섭 역시 누가 억지로 떠먹여 주는 것이 아니라, 왜 그럴까라는 꼬리에 꼬리를 무는 본질적인 호기심이 발동할 때 자연스럽게 이루어지는 지적 확장입니다.”</span>
+          <span class="quote">“학교라는 공간이 이 호기심을 발산하고 마음껏 질문할 수 있는 안전한 울타리가 되어주는 것 자체가 여러 대안 중 하나가 될 수 있을 것입니다.”</span>
+          <p>탐구를 어려워하는 학생에게 가장 먼저 필요한 것은 완성된 주제가 아니라 좋은 질문입니다. 질문이 쌓이면 교과 개념이 연결되고, 방법이 생기고, 기록이 만들어집니다.</p>
+          <p><span class="point">질문 → 호기심 → 탐구방법 → 활동 → 기록</span>의 흐름을 상담 화면으로 구현하기 좋은 핵심 대목입니다.</p>
+        </div>
+      </article>
+
+      <article class="slide" style="--accent:#6ea8ff">
+        <div class="slide-meta">
+          <div class="num">05</div><span class="label">진로학업설계</span>
+          <h3>독서와 활동은 한 줄 스펙이 아니라 내면의 성장이어야 한다</h3>
+          <div class="forwhom"><span class="chip">독서</span><span class="chip">진로활동</span><span class="chip">학부모 설명</span></div>
+        </div>
+        <div class="quote-box">
+          <span class="quote">“의미는 좋습니다. 그러나 뺄셈 없는 덧셈 교육은 결국 학생들을 소진시킵니다.”</span>
+          <span class="quote">“현재의 입시 구조, 내신 평가 구조에서 학생 스스로 독서를 제대로 할 여유가 없습니다.”</span>
+          <span class="quote">“독서가 내면의 성장을 위한 자발적 행위가 아니라, 생기부 한 줄을 위한 전략적 스펙으로 전락한 지 오래입니다.”</span>
+          <p>이 부분은 학생과 학부모에게 매우 현실적인 상담 포인트입니다. 독서와 활동을 많이 추가하는 방식보다, 학생의 관심과 수업, 질문이 자연스럽게 연결되는 구조가 필요합니다.</p>
+          <p>상담에서는 “무엇을 더 할까?”보다 <span class="point">“지금 하는 활동에서 어떤 의미를 찾을까?”</span>로 방향을 바꿀 수 있습니다.</p>
+        </div>
+      </article>
+
+      <article class="slide" style="--accent:#ff8a7a">
+        <div class="slide-meta">
+          <div class="num">06</div><span class="label">교과 선택</span>
+          <h3>과목 선택은 선택인 동시에 배제다</h3>
+          <div class="forwhom"><span class="chip">교육과정</span><span class="chip">권장과목</span><span class="chip">과목상담</span></div>
+        </div>
+        <div class="quote-box">
+          <span class="quote">“일종의 전공기초 과목으로써 핵심-권장 과목이 기능하고 있습니다.”</span>
+          <span class="quote">“그런데 선택은 당연히 배제를 포함하고 있습니다. 즉, 어떤 과목을 선택한다는 것은 또 어떤 과목을 포기, 배제하는 것과 같습니다.”</span>
+          <span class="quote">“학생들은 배우지 않은 과목에서 다루는 개념과 원리는 거의 배우지 않는 ‘영’ 교육과정이 됩니다.”</span>
+          <p>교과 선택 상담은 단순히 유불리 계산으로 끝나면 안 됩니다. 어떤 전공을 위해 필요한 기초가 무엇인지, 학생이 어떤 개념을 경험해야 하는지를 함께 봐야 합니다.</p>
+          <p>학생에게는 “이 과목이 네 진로와 어떤 언어로 연결되는가?”를 묻는 방식이 좋습니다.</p>
+        </div>
+      </article>
+
+      <article class="slide" style="--accent:#5ee7ff">
+        <div class="slide-meta">
+          <div class="num">07</div><span class="label">융합적 사고</span>
+          <h3>아는 것만 깊게 파는 공부로는 세상을 교차해서 보기 어렵다</h3>
+          <div class="forwhom"><span class="chip">융합</span><span class="chip">통섭</span><span class="chip">교육과정</span></div>
+        </div>
+        <div class="quote-box">
+          <span class="quote">“자연현상과 사회인문현상은 특정 학문 한두 가지 개념과 원리만으로 설명되지 않는 것들이 많습니다.”</span>
+          <span class="quote">“통섭, 통합, 융합, 학제 간 연구가 필요합니다.”</span>
+          <span class="quote">“아는 것만 깊게 파고, 모르는 것은 아예 담을 쌓게 만드는 구조 속에서는 사회인문현상과 자연현상을 교차해서 바라보는 통찰력이 길러질 수 없습니다.”</span>
+          <p>이 인사이트는 진로가 뚜렷한 학생에게도 중요합니다. 의약, 공학, 경영, 인문, 사회 어느 전공이든 실제 문제는 여러 학문이 겹치는 지점에서 발생합니다.</p>
+          <p>상담 화면에서는 <span class="point">전공 관심 → 연결 교과 → 융합 질문 → 탐구 방법</span>으로 이어지는 구조를 만들 수 있습니다.</p>
+        </div>
+      </article>
+
+      <article class="slide" style="--accent:#f9a8d4">
+        <div class="slide-meta">
+          <div class="num">08</div><span class="label">AI 시대 학생부</span>
+          <h3>학생부는 “누구인가?”라는 질문에 답할 수 있어야 한다</h3>
+          <div class="forwhom"><span class="chip">AI 활용</span><span class="chip">학생부</span><span class="chip">진정성</span></div>
+        </div>
+        <div class="quote-box">
+          <span class="quote">“학생과 교사 모두 AI의 도움을 받습니다. 그래서 학생들의 활동 산출물 수준이 많이 높아졌습니다.”</span>
+          <span class="quote">“어떤 자세로 학생부를 기재하느냐에 따라 문장의 수준이 다릅니다. 문장력을 비교하는 것이 아닙니다.”</span>
+          <span class="quote">“이것은 Who are you? 라는 질문에 학생부가 답을 할 수 있느냐 없느냐의 차이를 결정합니다.”</span>
+          <p>AI는 도구가 될 수 있지만, 학생의 실제 경험을 대신할 수는 없습니다. 중요한 것은 글의 완성도가 아니라 학생이 어떤 사람인지 드러나는 맥락입니다.</p>
+          <p>학생과 학부모에게는 “AI로 멋진 결과물을 만들었는가?”보다 <span class="point">“내 경험으로 설명할 수 있는가?”</span>를 묻는 상담이 필요합니다.</p>
+        </div>
+      </article>
+
+      <article class="slide" style="--accent:#b8ff7a">
+        <div class="slide-meta">
+          <div class="num">09</div><span class="label">학교 활동 소재</span>
+          <h3>분석보다 어려운 것은 학교 안에서 활동 소재를 만드는 일이다</h3>
+          <div class="forwhom"><span class="chip">탐구활동</span><span class="chip">수업 설계</span><span class="chip">교사 협업</span></div>
+        </div>
+        <div class="quote-box">
+          <span class="quote">“하지만 분석과, 학교에서 활동 소재를 만들어주는 것과는 차원이 다른 문제란 생각이 듭니다.”</span>
+          <span class="quote">“방법적인 걸 연구해야 하는 학교가 참 힘든 공간임을 느낍니다.”</span>
+          <span class="quote">“힘들긴 하지만 정답은 학교에 있다는 사실에 위로가 됩니다. 어떤 좋은 자료도 적용은 저희 교사와 학생이 하니까요.”</span>
+          <p>이 대화는 플랫폼의 방향을 정해 줍니다. 단순 분석 기능보다 중요한 것은 학생이 실제로 따라 할 수 있는 질문, 활동, 탐구 방법을 제시하는 것입니다.</p>
+          <p>그래서 이 웹은 <span class="point">상담 상황 → 질문 → 교과 개념 → 탐구 방법 → 기록 방향</span>으로 이어져야 합니다.</p>
+        </div>
+      </article>
+
+      <article class="slide" style="--accent:#fde68a">
+        <div class="slide-meta">
+          <div class="num">10</div><span class="label">자기평가서</span>
+          <h3>학생 수준에 맞게 질문과 성찰의 층위를 다르게 설계한다</h3>
+          <div class="forwhom"><span class="chip">자기평가</span><span class="chip">수행평가</span><span class="chip">질문ON</span></div>
+        </div>
+        <div class="quote-box">
+          <span class="quote">“학생들의 수준이 다양해서, 자기평가서를 Level C-B-A 수준으로 나눴습니다.”</span>
+          <span class="quote">“A 수준은 7월에 포함해서 배부하려고 합니다.”</span>
+          <span class="quote">“기사 속 내용도 자기평가서에 포함되어 있는데, 기사 속 내용이 그만큼 좋았었습니다.”</span>
+          <p>학생들이 모두 같은 깊이의 질문으로 출발할 수는 없습니다. 그래서 자기평가서와 탐구기록지는 난이도와 사고 수준을 나누어 설계할 필요가 있습니다.</p>
+          <p>이 웹에서는 학생이 자신의 수준을 선택하고, 그 수준에 맞는 질문과 성찰 문항을 받을 수 있는 기능으로 확장할 수 있습니다.</p>
+        </div>
+      </article>
+
+      <article class="slide" style="--accent:#6ea8ff">
+        <div class="slide-meta">
+          <div class="num">11</div><span class="label">학생과 만든 자료</span>
+          <h3>좋은 자료는 학생과 함께 만든 결과물에서 나온다</h3>
+          <div class="forwhom"><span class="chip">학생 주도</span><span class="chip">상담 루틴</span><span class="chip">탐구 기록</span></div>
+        </div>
+        <div class="quote-box">
+          <span class="quote">“저는 아침 7시에 항상 출근하여 학생 1명과 상담하는 루틴을 갖고 있습니다.”</span>
+          <span class="quote">“설계 능력까지는 부족하지만 항상 제 자료는 학생과 함께 만든 자료를 정리한 결과입니다.”</span>
+          <span class="quote">“사실 저보다는 학생들 결과물로 생각해주시면 좋겠습니다.”</span>
+          <p>이 말은 진학 자료의 출처가 어디여야 하는지를 보여 줍니다. 책상 위에서 만든 완성형 자료보다, 학생과 실제로 부딪치며 만든 상담 기록이 더 살아 있습니다.</p>
+          <p>학생에게는 자신의 결과물이 다음 질문의 출발점이 되고, 교사에게는 상담 자료가 됩니다.</p>
+        </div>
+      </article>
+
+      <article class="slide" style="--accent:#ff8a7a">
+        <div class="slide-meta">
+          <div class="num">12</div><span class="label">질문 수업 전문가</span>
+          <h3>질문하는 수업은 오래된 철학이자 새로운 진학 역량이다</h3>
+          <div class="forwhom"><span class="chip">질문 수업</span><span class="chip">교육학 이론</span><span class="chip">지역 연계</span></div>
+        </div>
+        <div class="quote-box">
+          <span class="quote">“질문하는 수업을 20년째 하고 있습니다.”</span>
+          <span class="quote">“블룸과 에릭슨, 래닝의 과정의 구조, 크래스월의 목표분류학을 연구하여 학생 질문을 유도하고 학생 주도 수업에 관심이 많습니다.”</span>
+          <span class="quote">“지역 연계는 일상과 삶에서 시작하는 2022 교육과정을 생각하여 아이들이 지역에서 주제를 찾아볼 수 있도록 개발하고 있습니다.”</span>
+          <p>질문 수업은 단순히 재미있는 수업 방식이 아니라 학생의 사고 흐름을 만들고, 그것이 탐구와 학생부로 이어지는 구조입니다.</p>
+          <p>이 플랫폼에는 지역, 일상, 교과 개념을 연결하는 질문 생성 모듈이 들어가면 좋습니다.</p>
+        </div>
+      </article>
+
+      <article class="slide" style="--accent:#5ee7ff">
+        <div class="slide-meta">
+          <div class="num">13</div><span class="label">교육과정과 평가</span>
+          <h3>배움과 평가가 일치할 때 학생의 성장이 보인다</h3>
+          <div class="forwhom"><span class="chip">교육과정</span><span class="chip">평가 설계</span><span class="chip">기록 연계</span></div>
+        </div>
+        <div class="quote-box">
+          <span class="quote">“학교 교육과정의 안정적인 운영과 설계를 책임지는 교육과정부장입니다.”</span>
+          <span class="quote">“질문 기반 탐구 학습과 수행평가 설계에 관한 꾸준한 연구를 바탕으로, 배움과 평가가 일치하는 교육 현장을 만드는 데 주력하고 있습니다.”</span>
+          <span class="quote">“학생의 서사가 담기는 평가 설계와 기록에 관심을 두고 있습니다.”</span>
+          <p>평가가 수업과 분리되면 학생은 활동을 ‘제출물’로만 느낍니다. 반대로 배움과 평가가 연결되면 학생의 생각과 성장 과정이 자연스럽게 기록됩니다.</p>
+          <p>이 웹에서는 수행평가 문항을 진로 질문과 연결해 주는 기능이 큰 역할을 할 수 있습니다.</p>
+        </div>
+      </article>
+
+      <article class="slide" style="--accent:#f9a8d4">
+        <div class="slide-meta">
+          <div class="num">14</div><span class="label">농어촌·최저 없는 전형</span>
+          <h3>학생 상황에 맞는 전형을 읽는 것도 중요한 상담 역량이다</h3>
+          <div class="forwhom"><span class="chip">전형 상담</span><span class="chip">농어촌</span><span class="chip">의약학·교대</span></div>
+        </div>
+        <div class="quote-box">
+          <span class="quote">“교직 시작부터 계속 농어촌전형 진학을 주로 다루고 있음.”</span>
+          <span class="quote">“학부모, 학생을 위한 학교생활기록부 작성 사례 개발 및 교사를 위한 보급형 기록 사례집 개발.”</span>
+          <span class="quote">“최저 없는 농어촌 종합전형 입시, 의약학, 교대 등에 관심을 두고 있습니다.”</span>
+          <p>모든 학생에게 같은 상담 방식이 적용될 수는 없습니다. 지역, 학교, 성적, 전형 조건, 희망 전공에 따라 상담의 초점이 달라져야 합니다.</p>
+          <p>학생과 학부모에게는 “내 상황에서 가능한 길”을 구체적으로 보여 주는 전형 상담 카드가 필요합니다.</p>
+        </div>
+      </article>
+
+      <article class="slide" style="--accent:#b8ff7a">
+        <div class="slide-meta">
+          <div class="num">15</div><span class="label">전공·직업 연결</span>
+          <h3>교과, 진로, 직업을 분리하지 않고 연결해서 보여준다</h3>
+          <div class="forwhom"><span class="chip">진로 탐색</span><span class="chip">전공 선택</span><span class="chip">상담 자료</span></div>
+        </div>
+        <div class="quote-box">
+          <span class="quote">“진학 관련 프로그램을 총괄하고 있습니다.”</span>
+          <span class="quote">“진로학업설계지원단, 진학상담 컨설팅, 강의 경험을 바탕으로 학생들이 이해하기 쉬운 자료를 만들고 있습니다.”</span>
+          <span class="quote">“인포자료는 학급 게시용으로 너무 좋네요.”</span>
+          <p>학생에게 진학 정보는 너무 많고 어렵습니다. 그래서 한눈에 보는 인포그래픽, 직업·학과·과목 연결 자료가 필요합니다.</p>
+          <p>이 웹에서는 전공을 누르면 관련 직업, 고교 선택 과목, 탐구 질문, 학생부 표현까지 이어지는 구조가 좋습니다.</p>
+        </div>
+      </article>
+
+      <article class="slide" style="--accent:#fde68a">
+        <div class="slide-meta">
+          <div class="num">16</div><span class="label">면접과 학생부</span>
+          <h3>면접은 활동의 개수보다 사고의 흐름을 확인한다</h3>
+          <div class="forwhom"><span class="chip">면접</span><span class="chip">학생부 기반 질문</span><span class="chip">대학별 자료</span></div>
+        </div>
+        <div class="quote-box">
+          <span class="quote">“면접 생기부 전문 자료의 질이 좋은 것 같아 공유합니다.”</span>
+          <span class="quote">“방금 끝난 서울대 간담회입니다. 참고용으로만 활용해 달라는 당부 말씀도 있었습니다.”</span>
+          <span class="quote">“내일 공부할 게 많네요. 혼자서 보겠습니다.”</span>
+          <p>면접 준비는 예상 질문을 외우는 것이 아니라, 학생부 속 활동을 자기 언어로 설명할 수 있게 만드는 과정입니다.</p>
+          <p>상담에서는 학생부 문장을 누르면 예상 질문, 답변 구조, 보완 질문이 연결되는 방식이 유용합니다.</p>
+        </div>
+      </article>
+
+      <article class="slide" style="--accent:#6ea8ff">
+        <div class="slide-meta">
+          <div class="num">17</div><span class="label">낭만 있는 학교생활</span>
+          <h3>진학에 바로 보이지 않아도 삶에 남는 학교 경험이 있다</h3>
+          <div class="forwhom"><span class="chip">진로 경험</span><span class="chip">학교생활</span><span class="chip">학생 성장</span></div>
+        </div>
+        <div class="quote-box">
+          <span class="quote">“아르쿠투르스, 스피카, 북두칠성까지 하나의 스토리를 담아 하늘을 관찰하는 여유.”</span>
+          <span class="quote">“대학 진학에 도움이 안 되겠지만, 가끔 낭만 있는 학교 생활이 아이들 인생에 더 큰 도움이 되었으면 합니다.”</span>
+          <span class="quote">“별빛캠프, 천문학 교수님과 천문에 관심 많은 교사들 모시고 학생들과 별봅니다.”</span>
+          <p>모든 활동이 곧바로 입시 성과로 환산될 필요는 없습니다. 어떤 경험은 학생의 세계를 넓히고, 훗날 진로의 감각으로 남습니다.</p>
+          <p>이 플랫폼에는 “입시용 활동”뿐 아니라 학생의 삶과 감수성을 넓히는 학교 경험도 담길 수 있습니다.</p>
+        </div>
+      </article>
+
+      <article class="slide" style="--accent:#ff8a7a">
+        <div class="slide-meta">
+          <div class="num">18</div><span class="label">집단지성</span>
+          <h3>한 명의 노하우가 아니라 여러 교사의 관점이 모일 때 상담이 깊어진다</h3>
+          <div class="forwhom"><span class="chip">교사 협업</span><span class="chip">자료 공유</span><span class="chip">공교육 네트워크</span></div>
+        </div>
+        <div class="quote-box">
+          <span class="quote">“다들 출중한 역량을 가지고 있는 분들이라 좋은 기획 있으면 함께 집필 협업도 해보시지요.”</span>
+          <span class="quote">“웬만한 다른 커뮤니티 자료보다 이 카톡방에서 나눠 주시는 자료가 엄청나네요.”</span>
+          <span class="quote">“공자님께서 세 명이 길을 가면 반드시 나의 스승이 될 만한 사람이 있다고 하셨는데 여기는 모두 스승님이시네요. 덕분에 많이 생각하고 공부하고 있습니다.”</span>
+          <p>이 웹의 정체성은 바로 여기에 있습니다. 한 명의 자료가 아니라, 여러 교사의 질문과 고민이 모여 학생과 학부모가 이해하기 쉬운 상담 프레임이 됩니다.</p>
+          <p><span class="point">모두의 SYNERGY FRAME</span>은 그래서 자료 저장소가 아니라 공교육 진학 상담의 집단지성 스크린입니다.</p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section class="section" id="questions">
+  <div class="section-head">
+    <h2 class="section-title">학생·학부모 상담 질문 프레임</h2>
+    <p class="section-desc">대화 인사이트를 학생과 학부모가 바로 이해할 수 있는 질문 형태로 바꾼 카드입니다. 실제 상담에서는 이 질문을 누르면 위의 인사이트 슬라이드, 자료, 활동지로 연결되도록 확장하면 좋습니다.</p>
+  </div>
+  <div class="question-bank">
+    <div class="qcard"><b>생기부가 평범하면 정말 불리한가요?</b><span>활동의 양보다 질문과 성장의 연결을 봅니다.</span></div>
+    <div class="qcard"><b>탐구 주제를 못 정하면 어디서 시작하나요?</b><span>교과 수업 중 궁금했던 작은 질문에서 출발합니다.</span></div>
+    <div class="qcard"><b>교과 선택은 성적이 우선인가요, 진로가 우선인가요?</b><span>전공 기초와 학생의 학업 흐름을 함께 봐야 합니다.</span></div>
+    <div class="qcard"><b>AI를 활용한 결과물은 어떻게 설명해야 하나요?</b><span>도구보다 중요한 것은 학생 자신의 경험과 해석입니다.</span></div>
+    <div class="qcard"><b>면접에서 가장 많이 확인하는 것은 무엇인가요?</b><span>학생부 속 활동을 자기 언어로 설명할 수 있는지입니다.</span></div>
+    <div class="qcard"><b>독서는 생기부 한 줄을 위해 해야 하나요?</b><span>독서는 내면의 성장과 진로 질문을 만드는 과정입니다.</span></div>
+    <div class="qcard"><b>수행평가는 진학과 어떻게 연결되나요?</b><span>평가 과제가 질문과 탐구로 이어질 때 기록이 살아납니다.</span></div>
+    <div class="qcard"><b>전공과 관련 없는 활동은 의미가 없나요?</b><span>활동 속 사고방식과 태도가 전공 이해로 연결될 수 있습니다.</span></div>
+    <div class="qcard"><b>질문을 잘하는 학생은 무엇이 다른가요?</b><span>당연해 보이는 것에서 스스로 의문을 발견합니다.</span></div>
+    <div class="qcard"><b>학부모는 무엇을 도와주면 좋을까요?</b><span>활동을 대신 설계하기보다 학생의 질문을 들어주는 것이 중요합니다.</span></div>
+    <div class="qcard"><b>진로가 자주 바뀌면 불리한가요?</b><span>변화의 이유와 탐색 과정이 분명하면 성장의 기록이 됩니다.</span></div>
+    <div class="qcard"><b>융합 탐구는 어떻게 만들 수 있나요?</b><span>하나의 현상을 여러 교과 개념으로 바라보면 됩니다.</span></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <strong>모두의 SYNERGY FRAME</strong><br>
+  질문이 연결되고 탐구가 학생의 미래가 되다<br>
+  시너지 리더들의 실제 대화를 기반으로 구성한 공교육 진학 플랫폼
+</footer>
+
+<script>
+const text='시너지 리더들의 실제 대화와 고민을 기반으로 만든 공교육 진학 플랫폼입니다.';
+const target=document.getElementById('typing');
+let i=0;
+function type(){ if(i<text.length){ target.textContent+=text.charAt(i); i++; setTimeout(type,55); } }
+type();
+
+const slider=document.getElementById('slider');
+const slides=[...document.querySelectorAll('.slide')];
+const now=document.getElementById('now');
+const total=document.getElementById('total');
+total.textContent=slides.length;
+let current=0;
+function updateCounter(){
+  const left=slider.scrollLeft;
+  let nearest=0,dist=Infinity;
+  slides.forEach((s,idx)=>{const d=Math.abs(s.offsetLeft-left); if(d<dist){dist=d;nearest=idx;}});
+  current=nearest; now.textContent=current+1;
+}
+function moveSlide(dir){
+  current=Math.max(0,Math.min(slides.length-1,current+dir));
+  slides[current].scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});
+  setTimeout(updateCounter,350);
+}
+slider.addEventListener('scroll',()=>requestAnimationFrame(updateCounter));
+document.addEventListener('keydown',e=>{ if(e.key==='ArrowRight') moveSlide(1); if(e.key==='ArrowLeft') moveSlide(-1); });
+</script>
+</body>
+</html>
